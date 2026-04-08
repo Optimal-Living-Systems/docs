@@ -1,0 +1,24 @@
+name: staleness-check
+on:
+  schedule:
+    - cron: '0 9 * * 1'    # Every Monday at 09:00 UTC
+  workflow_dispatch:         # Manual trigger
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - run: pip install pyyaml python-frontmatter
+
+      - name: Scan for stale pages and open issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: python scripts/staleness_notify.py

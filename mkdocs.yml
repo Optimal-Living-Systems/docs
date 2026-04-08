@@ -1,104 +1,194 @@
-site_name: Optimal Living Systems
-site_description: Optimal Living Systems — a nonprofit dedicated to flourishing human communities.
-site_author: Optimal Living Systems
-site_url: https://optimal-living-systems.github.io/ols-mcdocs/
-repo_url: https://github.com/Optimal-Living-Systems/ols-mcdocs
-repo_name: Optimal-Living-Systems/ols-mcdocs
-edit_uri: edit/main/docs/
+# =============================================================================
+# Optimal Living Systems — Documentation Site Configuration
+# Phase 1 (~30 pages) — see PF Instructions for phase feature progression
+# =============================================================================
 
-copyright: Copyright &copy; Optimal Living Systems
+# --- Project information ---
+site_name: Optimal Living Systems Docs
+site_url: https://docs.optimallivingsystems.org/
+site_description: "Documentation hub for the OLS mutual aid AI lab"
+site_author: "OLS Documentation Team"
+repo_url: https://github.com/optimal-living-systems/docs
+repo_name: optimal-living-systems/docs
+copyright: "Copyright &copy; 2026 Optimal Living Systems — Apache 2.0"
 
+# --- Build directories ---
+docs_dir: docs/
+site_dir: site/
+
+# --- Theme ---
 theme:
   name: material
+  custom_dir: overrides/
   language: en
-  features:
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.sections
-    - navigation.top
-    - navigation.tracking
-    - navigation.instant
-    - navigation.indexes
-    - search.suggest
-    - search.highlight
-    - search.share
-    - content.code.copy
-    - content.action.edit
-    - content.tooltips
-    - toc.follow
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: teal
-      accent: deep orange
+    - scheme: default
+      primary: indigo
+      accent: indigo
       toggle:
-        icon: material/weather-night
+        icon: material/brightness-7
         name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: teal
-      accent: deep orange
+    - scheme: slate
+      primary: indigo
+      accent: indigo
       toggle:
-        icon: material/weather-sunny
+        icon: material/brightness-4
         name: Switch to light mode
   font:
-    text: Inter
-    code: JetBrains Mono
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/favicon.png
   icon:
     repo: fontawesome/brands/github
+  features:
+    # Phase 1 features ONLY — do not add Phase 2/3 features yet
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
 
+# --- Plugins ---
+plugins:
+  - search                    # MUST be listed explicitly when plugins key exists
+  - tags:
+      tags_allowed:
+        - external
+        - internal
+        - AI Lab
+        - Research Lab
+        - Data Team
+        - Engineering Team
+        - ML Engineer
+        - Project Manager
+        - Researcher
+        - Onboarding
+        - Process
+        - Reference
+        - Tutorial
+        - How-To
+        - Strategy
+        - Pipeline
+        - Infrastructure
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: date
+      fallback_to_build_date: true
+  - awesome-pages
+  - redirects:
+      redirect_maps: {}
+  - minify:
+      minify_html: !ENV [CI, false]
+
+# --- Markdown extensions ---
 markdown_extensions:
   - admonition
   - attr_list
   - def_list
   - footnotes
   - md_in_html
-  - tables
   - toc:
       permalink: true
+      toc_depth: 3
   - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.caret
-  - pymdownx.mark
-  - pymdownx.tilde
-  - pymdownx.smartsymbols
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
 
-plugins:
-  - search
-  - awesome-pages
-  - git-revision-date-localized:
-      enable_creation_date: true
-      type: timeago
-  - redirects:
-      redirect_maps: {}
-  - minify:
-      minify_html: true
-      minify_js: true
-      minify_css: true
-  - social
-
+# --- Extra ---
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/Optimal-Living-Systems
-  generator: false
+      link: https://github.com/optimal-living-systems
+  generator: false    # Hides "Made with Material" footer
 
+# --- Hooks ---
+hooks:
+  - hooks/staleness_check.py
+
+# --- Navigation ---
+# Using explicit nav for Phase 1. Will transition to awesome-pages
+# with per-directory .pages files when nav exceeds ~50 pages.
 nav:
-  - Home: index.md
-  - About: about.md
-  - Programs: programs.md
-  - Research: research.md
-  - Get Involved: get-involved.md
-  - Donate: donate.md
-  - Contact: contact.md
+  - Home:
+    - index.md
+
+  - Organization:
+    - organization/index.md
+    - Mission & Values: organization/mission.md
+    - Governance: organization/governance.md
+    - Policies: organization/policies.md
+    - Decisions: operations/decisions/index.md
+
+  - Projects:
+    - projects/index.md
+    - AI Lab:
+      - projects/ai-lab/index.md
+      - Overview: projects/ai-lab/overview.md
+      - projects/ai-lab/public/index.md
+      - Teams:
+        - projects/ai-lab/teams/index.md
+      - Workflows:
+        - projects/ai-lab/workflows/index.md
+      - Roles:
+        - projects/ai-lab/roles/index.md
+      - Guides:
+        - projects/ai-lab/guides/index.md
+      - Reference:
+        - projects/ai-lab/reference/index.md
+    - Research Lab:
+      - projects/research-lab/index.md
+      - Overview: projects/research-lab/overview.md
+      - projects/research-lab/public/index.md
+      - Teams:
+        - projects/research-lab/teams/index.md
+      - Workflows:
+        - projects/research-lab/workflows/index.md
+      - Roles:
+        - projects/research-lab/roles/index.md
+      - Guides:
+        - projects/research-lab/guides/index.md
+      - Reference:
+        - projects/research-lab/reference/index.md
+
+  - Infrastructure:
+    - infrastructure/index.md
+    - Tools & Platforms: infrastructure/tools.md
+    - Development Setup: infrastructure/dev-setup.md
+    - Reference:
+      - infrastructure/reference/index.md
+
+  - Guides:
+    - guides/index.md
+    - Onboarding: guides/onboarding.md
+    - Contributing: guides/contributing.md
+
+  - Roadmap:
+    - roadmap/index.md
+    - Strategic Plan: roadmap/strategic-plan.md
+
+  - Team:
+    - team/index.md
+    - Directory: team/directory.md
+    - Roles:
+      - team/roles/index.md
