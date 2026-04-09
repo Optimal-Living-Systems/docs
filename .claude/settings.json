@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "postWrite": [
+      {
+        "command": "bash hooks/validate_frontmatter.sh $FILE",
+        "description": "Validates front-matter schema and tags on written doc files"
+      }
+    ]
+  }
+}
